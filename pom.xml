@@ -16,7 +16,7 @@
 		<name>Units of Measurement project</name>
 		<url>http://www.unitsofmeasurement.org</url>
 	</organization>
-	<description>Units of Measurement Tools - complementing JSR 363 and the UOM project</description>
+	<description>Units of Measurement Tools - supporting JSR 363 and the UOM project</description>
 	<licenses>
 		<license>
 			<name>BSD</name>
