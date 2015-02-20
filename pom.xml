@@ -16,11 +16,11 @@
 		<name>Units of Measurement project</name>
 		<url>http://www.unitsofmeasurement.org</url>
 	</organization>
-	<description>Units of Measurement Libraries - extending and complementing JSR 363</description>
+	<description>Units of Measurement Tools - complementing JSR 363 and the UOM project</description>
 	<licenses>
 		<license>
 			<name>BSD</name>
-			<url>LICENSE.txt</url>
+			<url>LICENSE</url>
 		</license>
 	</licenses>
 
@@ -32,20 +32,7 @@
 		<jdkVersion>1.7</jdkVersion>
 		<maven.compile.targetLevel>${jdkVersion}</maven.compile.targetLevel>
 		<maven.compile.sourceLevel>${jdkVersion}</maven.compile.sourceLevel>
-		<ri.version>0.8-SNAPSHOT</ri.version>
-		<se.version>0.7-SNAPSHOT</se.version>
-		<lib.version>${project.version}</lib.version>
 	</properties>
-
-	<dependencyManagement>
-		<dependencies>
-			<dependency>
-				<groupId>tec.uom</groupId>
-				<artifactId>unit-ri</artifactId>
-				<version>${ri.version}</version>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
 
 	<build>
 		<plugins>
