@@ -133,4 +133,7 @@
 			</build>
 		</profile>
 	</profiles>
+	<modules>
+		<module>cldr</module>
+	</modules>
 </project>
