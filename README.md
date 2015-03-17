@@ -11,6 +11,5 @@ Tools for JSR 363 and Units of Measurement
 
 
 
-
-Reference comparison for drone.io (currently shows *wrong* status, look at the actual build)
+ Reference comparison for drone.io (currently shows *wrong* status, look at the actual build)
 [![Build Status](https://drone.io/github.com/unitsofmeasurement/uom-tools/status.png)](https://drone.io/github.com/unitsofmeasurement/uom-tools/latest)
