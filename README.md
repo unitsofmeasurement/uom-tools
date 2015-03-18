@@ -2,6 +2,7 @@
 Tools for JSR 363 and Units of Measurement
 
 [![Build Status](https://travis-ci.org/unitsofmeasurement/uom-tools.svg?branch=master)](https://travis-ci.org/unitsofmeasurement/uom-tools)
+[![Circle CI](https://circleci.com/gh/unitsofmeasurement/uom-tools.svg?style=svg)](https://circleci.com/gh/unitsofmeasurement/uom-tools) 
 [![License](http://img.shields.io/badge/license-BSD3-blue.svg?style=flat-square)](http://opensource.org/licenses/BSD-3-Clause)
 
 [![Stories in Ready](https://badge.waffle.io/unitsofmeasurement/uom-tools.png?label=ready&title=Ready)](https://waffle.io/unitsofmeasurement/uom-tools)
