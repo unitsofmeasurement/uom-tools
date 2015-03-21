@@ -135,5 +135,6 @@
 	</profiles>
 	<modules>
 		<module>cldr</module>
+		<module>obix</module>
 	</modules>
 </project>
