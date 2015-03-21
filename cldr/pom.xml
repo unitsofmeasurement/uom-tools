@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>tec.uom.tools</groupId>
 		<artifactId>uom-tools</artifactId>
-		<version>0.1-SNAPSHOT</version>
+		<version>0.1</version>
 	</parent>
 	<artifactId>uom-cldr-tools</artifactId>
 	<name>Units of Measurement Tools for Unicode CLDR</name>

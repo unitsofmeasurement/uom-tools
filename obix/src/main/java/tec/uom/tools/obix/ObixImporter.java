@@ -67,8 +67,10 @@ public class ObixImporter implements Tool {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
+		final Tool importer = new ObixImporter();
+		int errorCode = importer.run(System.in, System.out, System.err, args);
+		if (errorCode == 0) {
+			System.out.println("Success.");
+		}
 	}
-
 }
