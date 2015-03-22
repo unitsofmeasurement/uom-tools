@@ -1,11 +1,23 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <parent>
-    <groupId>tec.uom.tools</groupId>
-    <artifactId>uom-tools</artifactId>
-    <version>0.1</version>
-  </parent>
-  <artifactId>uom-obix-tools</artifactId>
-  <name>Units of Measurement Tools for oBiX</name>
-  <description>UOM Tools for oBIX (Open Building Information Xchange)</description>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>tec.uom.tools</groupId>
+		<artifactId>uom-tools</artifactId>
+		<version>0.2-SNAPSHOT</version>
+	</parent>
+	<artifactId>uom-obix-tools</artifactId>
+	<name>Units of Measurement Tools for oBiX</name>
+	<description>UOM Tools for oBIX (Open Building Information Xchange)</description>
+	<build>
+		<plugins>
+			<!-- ======================================================= -->
+			<!-- Source Attachment -->
+			<!-- ======================================================= -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
 </project>
