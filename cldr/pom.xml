@@ -6,7 +6,7 @@
 		<artifactId>uom-tools</artifactId>
 		<version>0.2-SNAPSHOT</version>
 	</parent>
-	<artifactId>uom-cldr-tools</artifactId>
+	<artifactId>uom-tools-cldr</artifactId>
 	<name>Units of Measurement Tools for Unicode CLDR</name>
 
 	<dependencies>
