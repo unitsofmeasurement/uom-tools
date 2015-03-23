@@ -33,6 +33,7 @@
 	<!-- Build Settings -->
 	<!-- ======================================================= -->
 	<properties>
+		<jsr.version>0.8-RC1</jsr.version>
 		<project.build.javaVersion>1.7</project.build.javaVersion>
 		<jdkVersion>1.7</jdkVersion>
 		<maven.compile.targetLevel>${jdkVersion}</maven.compile.targetLevel>
@@ -80,6 +81,11 @@
 
 	<dependencyManagement>
 		<dependencies>
+			<dependency>
+				<groupId>tec.uom.lib</groupId>
+				<artifactId>uom-lib-common</artifactId>
+				<version>0.6</version>
+			</dependency>
 			<dependency>
 				<groupId>net.sf.json-lib</groupId>
 				<artifactId>json-lib</artifactId>

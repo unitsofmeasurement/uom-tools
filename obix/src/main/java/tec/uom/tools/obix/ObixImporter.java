@@ -26,30 +26,78 @@
  */
 package tec.uom.tools.obix;
 
+import java.io.File;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.logging.Logger;
 
 import javax.lang.model.SourceVersion;
+import javax.measure.Unit;
 import javax.tools.Tool;
+
+import tec.uom.lib.common.function.DescriptionSupplier;
 
 /**
  * @author Werner
- *
+ * @version 0.2
  */
 public class ObixImporter implements Tool {
-
+	
+	// TODO factor out, e.g. into uom-lib-common
+	static enum ErrorCode {
+		OK, Failure
+		// For now we'll use ordinal, but should change to code or Id (e.g. using IntIdentifiable)
+	}
+	
+	protected final Logger logger = Logger.getLogger(getClass().getName());
+	
 	/* (non-Javadoc)
 	 * @see javax.tools.Tool#run(java.io.InputStream, java.io.OutputStream, java.io.OutputStream, java.lang.String[])
 	 */
 	@Override
 	public int run(InputStream in, OutputStream out, OutputStream err,
 			String... arguments) {
-		// TODO Auto-generated method stub
-		return 0;
+		String outPath;
+		//Unit kg = ObixUnit.parse("kilogram");
+		//System.out.println(kg);		
+		List<Unit> units = ObixUnit.units();
+		if (units != null && units.size() > 0) {
+			for (Unit u : units) {
+				logger.fine("Unit: " + u + ", " + u.getName() + ",  " + u.getDimension() + " :: " + ((DescriptionSupplier)u).getDescription());
+			}
+			
+			for (String q : ObixUnit.quantityNames()) {
+				logger.fine("Quantity: " + q);
+			}
+			
+			final Map quantities = ObixUnit.quantities();
+			for (Object key : quantities.keySet()) {
+				logger.fine("Key: " + key + "; Value: " + quantities.get(key));
+			}
+			
+			if (arguments != null && arguments.length > 0) {
+				outPath = arguments[0];
+				logger.fine("Writing to: " + outPath);
+				writeQuantityNames(ObixUnit.quantityNames(), outPath);
+			}
+			
+			return ErrorCode.OK.ordinal();
+		} else {
+			return ErrorCode.Failure.ordinal();
+		}
+	}
+	
+	private void writeQuantityNames(List<String> quantList, String path) {
+		final String fileName = "quantities.txt";
+		final String fullPath = path + File.separator + fileName;
+		logger.fine("Writing to: " + fullPath);
+		
 	}
 
 	/* (non-Javadoc)
@@ -69,8 +117,10 @@ public class ObixImporter implements Tool {
 	public static void main(String[] args) {
 		final Tool importer = new ObixImporter();
 		int errorCode = importer.run(System.in, System.out, System.err, args);
-		if (errorCode == 0) {
+		if (errorCode == ErrorCode.OK.ordinal()) {
 			System.out.println("Success.");
+		} else {
+			System.err.println("Error!");
 		}
 	}
 }

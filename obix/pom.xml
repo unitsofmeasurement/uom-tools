@@ -9,6 +9,18 @@
 	<artifactId>uom-obix-tools</artifactId>
 	<name>Units of Measurement Tools for oBiX</name>
 	<description>UOM Tools for oBIX (Open Building Information Xchange)</description>
+
+	<dependencies>
+		<dependency>
+			<groupId>javax.measure</groupId>
+			<artifactId>unit-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>tec.uom.lib</groupId>
+			<artifactId>uom-lib-common</artifactId>
+		</dependency>
+	</dependencies>
+
 	<build>
 		<plugins>
 			<!-- ======================================================= -->
