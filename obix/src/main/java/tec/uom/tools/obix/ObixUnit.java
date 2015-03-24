@@ -27,7 +27,7 @@
 package tec.uom.tools.obix;
 
 //
-//Portions: 20 Dec 08  Brian Frank (Fantom)
+//Portions: 2008  Brian Frank (Fantom)
 //
 
 import static tec.uom.tools.obix.LocalHelpers.dup;
@@ -54,7 +54,7 @@ import java.util.Objects;
 
 /**
  * oBIX representation of a Unit
- * @version 0.1
+ * @version 0.2
  * @author Werner Keil
  */
 @SuppressWarnings("rawtypes")
@@ -670,7 +670,7 @@ final class ObixUnit implements Unit, DescriptionSupplier
 		quantityNames = loadDatabase();
 	}
 
-	private final List ids;
+	private final List<String> ids;
 	private final double scale;
 	private final double offset;
 	private final Dim dim;

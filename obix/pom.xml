@@ -6,7 +6,7 @@
 		<artifactId>uom-tools</artifactId>
 		<version>0.2-SNAPSHOT</version>
 	</parent>
-	<artifactId>uom-tools-obix</artifactId>
+	<artifactId>uom-obix-tools</artifactId>
 	<name>Units of Measurement Tools for oBiX</name>
 	<description>UOM Tools for oBIX (Open Building Information Xchange)</description>
 
