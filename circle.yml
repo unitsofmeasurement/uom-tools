@@ -1,9 +1,9 @@
-general:
-  artifacts:
-    - "target" # files, relative to the build directory
+#general:
+#  artifacts:
+#    - "target" # files, relative to the build directory
 machine:
   environment:
     UOM_VERSION: 0.2-SNAPSHOT
 test:
   post:
-    - cp /home/ubuntu/.m2/repository/tec/uom/tools/uom-cldr-tools/$UOM_VERSION/*.jar $CIRCLE_ARTIFACTS
+    - cp $HOME/.m2/repository/tec/uom/tools/uom-cldr-tools/$UOM_VERSION/*.jar $CIRCLE_ARTIFACTS
