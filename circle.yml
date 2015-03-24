@@ -3,4 +3,4 @@ general:
     - "target" # files, relative to the build directory
 test:
   post:
-    - cp /home/ubuntu/uom-tools/target/*.jar $CIRCLE_ARTIFACTS
+    - cp /home/ubuntu/.m2/repository/tec/uom/tools/uom-cldr-tools/0.2-SNAPSHOT/*.jar $CIRCLE_ARTIFACTS
