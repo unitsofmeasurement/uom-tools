@@ -1,3 +1,6 @@
 general:
   artifacts:
     - "target" # files, relative to the build directory
+test:
+  post:
+    - cp /home/ubuntu/uom-tools/target/*.jar $CIRCLE_ARTIFACTS
