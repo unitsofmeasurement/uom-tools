@@ -27,7 +27,7 @@
 package tec.uom.tools.obix;
 
 //
-//Portions: 2008  Brian Frank (Fantom)
+//Portions: 20 Dec 08  Brian Frank (Fantom)
 //
 
 import static tec.uom.tools.obix.LocalHelpers.dup;
@@ -560,7 +560,8 @@ final class ObixUnit implements Unit, DescriptionSupplier
 		}
 	}
 
-	final Unit div(ObixUnit b) {
+	@Override
+	public final Unit divide(Unit b) {
 		synchronized (combos) {
 			Combo key = new Combo(this, "/", b);
 			Unit r = (ObixUnit) combos.get(key);
@@ -670,10 +671,16 @@ final class ObixUnit implements Unit, DescriptionSupplier
 		quantityNames = loadDatabase();
 	}
 
-	private final List<String> ids;
+	@Override
+	public Dimension getDimension() {
+		return dim;
+	}
+	
+	private final List ids;
 	private final double scale;
 	private final double offset;
 	private final Dim dim;
+	
 	@Override
 	public Unit alternate(String arg0) {
 		// TODO Auto-generated method stub
@@ -693,12 +700,6 @@ final class ObixUnit implements Unit, DescriptionSupplier
 	}
 
 	@Override
-	public Unit divide(Unit arg0) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public UnitConverter getConverterTo(Unit arg0)
 			throws UnconvertibleException {
 		// TODO Auto-generated method stub
@@ -710,11 +711,6 @@ final class ObixUnit implements Unit, DescriptionSupplier
 			throws IncommensurableException, UnconvertibleException {
 		// TODO Auto-generated method stub
 		return null;
-	}
-
-	@Override
-	public Dimension getDimension() {
-		return dim;
 	}
 
 	@Override
@@ -770,5 +766,4 @@ final class ObixUnit implements Unit, DescriptionSupplier
 		// TODO Auto-generated method stub
 		return null;
 	}
-
 }

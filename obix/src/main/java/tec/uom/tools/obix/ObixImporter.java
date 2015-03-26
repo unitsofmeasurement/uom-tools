@@ -26,7 +26,16 @@
  */
 package tec.uom.tools.obix;
 
-import java.io.File;
+import io.airlift.airline.Arguments;
+import io.airlift.airline.Cli;
+import io.airlift.airline.Cli.CliBuilder;
+import io.airlift.airline.Command;
+import io.airlift.airline.Help;
+import io.airlift.airline.Option;
+import io.airlift.airline.OptionType;
+
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Arrays;
@@ -45,7 +54,7 @@ import tec.uom.lib.common.function.DescriptionSupplier;
 
 /**
  * @author Werner
- * @version 0.2
+ * @version 0.3
  */
 public class ObixImporter implements Tool {
 	
@@ -55,7 +64,80 @@ public class ObixImporter implements Tool {
 		// For now we'll use ordinal, but should change to code or Id (e.g. using IntIdentifiable)
 	}
 	
-	protected final Logger logger = Logger.getLogger(getClass().getName());
+	protected static final Logger logger = Logger.getLogger(ObixImporter.class.getName());
+	
+    static class ObixCommand implements Runnable
+    {
+        @Option(type = OptionType.GLOBAL, name = "-v", description = "Verbose mode")
+        public boolean verbose;
+
+        public void run()
+        {
+            System.out.println(getClass().getSimpleName());
+        }
+    }
+    
+    @Command(name = "write", description = "Write to File")
+    public static final class Write extends ObixCommand
+    {
+        @Option(name = "-q", description = "Write quantities")
+        public String file;
+
+        @Arguments(description = "Quantities to write")
+        public List<String> quantities;
+        
+        @SuppressWarnings("rawtypes")
+		@Override
+        public void run() {
+        	if (file!=null && file.length()>0) {
+        		logger.info(getClass().getSimpleName() + " to " + file);
+        	} else {
+        		logger.info(getClass().getSimpleName());
+        	}
+        		
+        	if (quantities != null) {
+		        for (String q : quantities) {
+		        	System.out.println(q);
+		        }
+        	}
+        	
+        	if (verbose) {        	
+	    		List<Unit> units = ObixUnit.units();
+	    		if (units != null && units.size() > 0) {
+	    			for (Unit u : units) {
+	    				logger.fine("Unit: " + u + ", " + u.getName() + ",  " + u.getDimension() + " :: " + ((DescriptionSupplier)u).getDescription());
+	    			}    				    			
+	    		}
+	    		
+    			final Map quantities = ObixUnit.quantities();
+    			for (Object key : quantities.keySet()) {
+    				logger.fine("Key: " + key + "; Value: " + quantities.get(key));
+    			}
+    			
+				for (String q : ObixUnit.quantityNames()) {
+					logger.fine("Quantity: " + q);
+				}
+        	}
+        	
+			if (file!=null && file.length()>0) {
+				writeToFile(ObixUnit.quantityNames(), file);    			
+			}
+        }
+        
+        private void writeToFile(final List<String> quantities, final String fileName) {
+        	try (FileWriter fw = new FileWriter(fileName);
+        		 BufferedWriter bw = new BufferedWriter(fw)
+        			){        	        	
+        		for (String q : quantities) {
+        			bw.write(q);
+        			bw.newLine();
+        		}        	 
+        			 }
+        		    catch (Exception e) {
+        		        logger.warning(e.getMessage());
+        		    }
+        }
+    }
 	
 	/* (non-Javadoc)
 	 * @see javax.tools.Tool#run(java.io.InputStream, java.io.OutputStream, java.io.OutputStream, java.lang.String[])
@@ -63,41 +145,27 @@ public class ObixImporter implements Tool {
 	@Override
 	public int run(InputStream in, OutputStream out, OutputStream err,
 			String... arguments) {
-		String outPath;
-		//Unit kg = ObixUnit.parse("kilogram");
-		//System.out.println(kg);		
-		List<Unit> units = ObixUnit.units();
-		if (units != null && units.size() > 0) {
-			for (Unit u : units) {
-				logger.fine("Unit: " + u + ", " + u.getName() + ",  " + u.getDimension() + " :: " + ((DescriptionSupplier)u).getDescription());
-			}
-			
-			for (String q : ObixUnit.quantityNames()) {
-				logger.fine("Quantity: " + q);
-			}
-			
-			final Map quantities = ObixUnit.quantities();
-			for (Object key : quantities.keySet()) {
-				logger.fine("Key: " + key + "; Value: " + quantities.get(key));
-			}
-			
-			if (arguments != null && arguments.length > 0) {
-				outPath = arguments[0];
-				logger.fine("Writing to: " + outPath);
-				writeQuantityNames(ObixUnit.quantityNames(), outPath);
-			}
-			
-			return ErrorCode.OK.ordinal();
-		} else {
+		try {
+			@SuppressWarnings("unchecked")
+			CliBuilder<Runnable> builder = Cli.<Runnable>builder(getClass().getSimpleName())
+		                .withDescription("oBIX Importer Tool")
+		                .withDefaultCommand(Help.class)
+		                .withCommands(Help.class, Write.class);
+	
+	//	        builder.withGroup("unit")
+	//	                .withDescription("Manage set of tracked units")
+	//	                .withDefaultCommand(Load.class)
+	//	                .withCommands(UnitShow.class, UnitAdd.class);
+	
+		        Cli<Runnable> obixParser = builder.build();
+	
+		        obixParser.parse(arguments).run();	
+				
+				return ErrorCode.OK.ordinal();
+		} catch (Exception e) {
+			logger.severe(e.getMessage());
 			return ErrorCode.Failure.ordinal();
 		}
-	}
-	
-	private void writeQuantityNames(List<String> quantList, String path) {
-		final String fileName = "quantities.txt";
-		final String fullPath = path + File.separator + fileName;
-		logger.fine("Writing to: " + fullPath);
-		
 	}
 
 	/* (non-Javadoc)
