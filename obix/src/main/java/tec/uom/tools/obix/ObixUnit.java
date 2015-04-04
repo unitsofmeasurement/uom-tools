@@ -54,14 +54,14 @@ import java.util.Objects;
 
 /**
  * oBIX representation of a Unit
- * @version 0.2
+ * @version 0.3
  * @author Werner Keil
  */
 @SuppressWarnings("rawtypes")
 final class ObixUnit implements Unit, DescriptionSupplier
 
 {
-	private static final String DEFAULT_PATH = "src/main/java/tec/uom/tools/obix/units.txt";
+	private static final String DEFAULT_PATH = "src/main/resources/etc/units.txt";
 
 	// ////////////////////////////////////////////////////////////////////////
 	// Database

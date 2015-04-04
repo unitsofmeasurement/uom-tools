@@ -57,7 +57,6 @@ import tec.uom.lib.common.function.DescriptionSupplier;
  * @version 0.3
  */
 public class ObixImporter implements Tool {
-	
 	// TODO factor out, e.g. into uom-lib-common
 	static enum ErrorCode {
 		OK, Failure
@@ -66,22 +65,19 @@ public class ObixImporter implements Tool {
 	
 	protected static final Logger logger = Logger.getLogger(ObixImporter.class.getName());
 	
-    static class ObixCommand implements Runnable
-    {
+    static class ToolCommand implements Runnable {
         @Option(type = OptionType.GLOBAL, name = "-v", description = "Verbose mode")
         public boolean verbose;
 
-        public void run()
-        {
+        public void run() {
             System.out.println(getClass().getSimpleName());
         }
     }
     
-    @Command(name = "write", description = "Write to File")
-    public static final class Write extends ObixCommand
-    {
-        @Option(name = "-q", description = "Write quantities")
-        public String file;
+    @Command(name = "write", description = "Write to file")
+    public static final class Write extends ToolCommand {
+        @Option(name = "-q", description = "Quantities output file")
+        public String quantOutFile;
 
         @Arguments(description = "Quantities to write")
         public List<String> quantities;
@@ -89,8 +85,8 @@ public class ObixImporter implements Tool {
         @SuppressWarnings("rawtypes")
 		@Override
         public void run() {
-        	if (file!=null && file.length()>0) {
-        		logger.info(getClass().getSimpleName() + " to " + file);
+        	if (quantOutFile!=null && quantOutFile.length()>0) {
+        		logger.info(getClass().getSimpleName() + " to " + quantOutFile);
         	} else {
         		logger.info(getClass().getSimpleName());
         	}
@@ -119,15 +115,14 @@ public class ObixImporter implements Tool {
 				}
         	}
         	
-			if (file!=null && file.length()>0) {
-				writeToFile(ObixUnit.quantityNames(), file);    			
+			if (quantOutFile!=null && quantOutFile.length()>0) {
+				writeToFile(ObixUnit.quantityNames(), quantOutFile);    			
 			}
         }
         
         private void writeToFile(final List<String> quantities, final String fileName) {
         	try (FileWriter fw = new FileWriter(fileName);
-        		 BufferedWriter bw = new BufferedWriter(fw)
-        			){        	        	
+        		 BufferedWriter bw = new BufferedWriter(fw)){        	        	
         		for (String q : quantities) {
         			bw.write(q);
         			bw.newLine();
@@ -157,9 +152,8 @@ public class ObixImporter implements Tool {
 	//	                .withDefaultCommand(Load.class)
 	//	                .withCommands(UnitShow.class, UnitAdd.class);
 	
-		        Cli<Runnable> obixParser = builder.build();
-	
-		        obixParser.parse(arguments).run();	
+		        Cli<Runnable> toolParser = builder.build();
+		        toolParser.parse(arguments).run();	
 				
 				return ErrorCode.OK.ordinal();
 		} catch (Exception e) {
