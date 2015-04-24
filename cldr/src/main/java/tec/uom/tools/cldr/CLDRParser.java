@@ -33,15 +33,11 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.logging.Logger;
 
+import javax.json.Json;
+import javax.json.JsonObject;
+import javax.json.JsonReader;
 import javax.measure.format.Parser;
 import javax.measure.format.ParserException;
-
-import tec.units.ri.spi.SIPrefix;
-
-import org.apache.commons.io.IOUtils;
-
-import net.sf.json.JSONObject;
-import net.sf.json.JSONSerializer;
 
 /**
  * @author Werner
@@ -63,47 +59,36 @@ final class CLDRParser implements Parser<Object, String> {
 
 	private static final Logger logger = Logger.getLogger(CLDRParser.class
 			.getName());
-	
+
 	private final boolean verbose;
 	private final Set<String> unitSet = new HashSet<>();
 	private final Set<String> quantitySet = new HashSet<>();
-	
+
 	CLDRParser(boolean v) {
 		this.verbose = v;
 	}
-	
+
 	void load(String... files) throws IOException, ParserException {
 		if (files != null && files.length > 0) {
-			InputStream is = CLDRParser.class.getResourceAsStream(files[0]);
-			String jsonTxt = IOUtils.toString(is);
 
-			final JSONObject json = (JSONObject) JSONSerializer.toJSON(jsonTxt);
-			// Set entries = json.entrySet();
-			//
-			// for (Object o : entries) {
-			// System.out.println(o);
-			// }
-			final JSONObject main = json.getJSONObject("main");
-			final JSONObject root = main.getJSONObject("root");
-//			JSONObject id = root.getJSONObject("identity");
-			final JSONObject units = root.getJSONObject("units");
-			// System.out.println(units);
-			final JSONObject longUnits = units.getJSONObject("long");
-			// System.out.println(longUnits);
+			InputStream is = CLDRParser.class.getResourceAsStream(files[0]);
+			JsonReader rdr = Json.createReader(is);
+
+			JsonObject obj = rdr.readObject();
+			final JsonObject main = obj.getJsonObject("main");
+			final JsonObject root = main.getJsonObject("root");
+			final JsonObject units = root.getJsonObject("units");
+			final JsonObject longUnits = units.getJsonObject("long");
 			@SuppressWarnings("rawtypes")
 			Set entries = longUnits.entrySet();
 
 			for (Object o : entries) {
 				handle(parse(o));
 			}
-
-//			for (SIPrefix prefix : SIPrefix.values()) {
-//				System.out.println(prefix);
-//			}
-			if (unitSet.size()>0 && files.length>1) {
+			if (unitSet.size() > 0 && files.length > 1) {
 				writeToFile(unitSet, files[1]);
 			}
-			if (quantitySet.size()>0 && files.length>2) {
+			if (quantitySet.size() > 0 && files.length > 2) {
 				writeToFile(quantitySet, files[2]);
 			}
 		}
@@ -113,9 +98,7 @@ final class CLDRParser implements Parser<Object, String> {
 	public String parse(Object input) throws ParserException {
 		return String.valueOf(input);
 	}
-	
-	// Internals
-	
+
 	private void handle(String st) {
 		String[] subStrings = st.split("=");
 		if (subStrings != null && subStrings.length > 0) {
@@ -128,26 +111,27 @@ final class CLDRParser implements Parser<Object, String> {
 			int quantCutOff = unitEntry.indexOf("-");
 			String quantity = unitEntry.substring(0, quantCutOff);
 			quantitySet.add(quantity);
-			String unit = unitEntry.substring(quantCutOff+1);
+			String unit = unitEntry.substring(quantCutOff + 1);
 			unitSet.add(quantity + ";" + unit);
-			if (verbose) System.out.println(quantity + ": " + unit);
+			if (verbose)
+				System.out.println(quantity + ": " + unit);
 		} else {
 			logger.warning(String.format("'%s' has no quantity, ignoring.",
 					unitEntry));
 		}
 	}
-	
-    private void writeToFile(final Set<String> strings, final String fileName) {
-    	if (fileName!=null && fileName.length()>0) {
-	    	try (FileWriter fw = new FileWriter(fileName);
-	    		 BufferedWriter bw = new BufferedWriter(fw)) {        	        	
-	    		for (String s : strings) {
-	    			bw.write(s);
-	    			bw.newLine();
-	    		}        	 
-	    	} catch (Exception e) {
-	    		logger.warning(e.getMessage());
-	    	}
-    	}
-    }
+
+	private void writeToFile(final Set<String> strings, final String fileName) {
+		if (fileName != null && fileName.length() > 0) {
+			try (FileWriter fw = new FileWriter(fileName);
+					BufferedWriter bw = new BufferedWriter(fw)) {
+				for (String s : strings) {
+					bw.write(s);
+					bw.newLine();
+				}
+			} catch (Exception e) {
+				logger.warning(e.getMessage());
+			}
+		}
+	}
 }
