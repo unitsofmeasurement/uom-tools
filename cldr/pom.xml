@@ -8,7 +8,9 @@
 	</parent>
 	<artifactId>uom-cldr-tools</artifactId>
 	<name>Units of Measurement Tools for Unicode CLDR</name>
-
+	<properties>
+		<jsonp.version>1.0</jsonp.version>
+	</properties>
 	<dependencies>
 		<dependency>
 			<groupId>javax.measure</groupId>
@@ -44,12 +46,12 @@
 		<dependency>
 			<groupId>javax.json</groupId>
 			<artifactId>javax.json-api</artifactId>
-			<version>1.1.0-SNAPSHOT</version>
+			<version>${jsonp.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.glassfish</groupId>
 			<artifactId>javax.json</artifactId>
-			<version>1.1.0-SNAPSHOT</version>
+			<version>${jsonp.version}</version>
 		</dependency>
 	</dependencies>
 
