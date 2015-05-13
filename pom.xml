@@ -25,9 +25,9 @@
 	</licenses>
 
 	<modules>
+		<module>shared</module>
 		<module>cldr</module>
 		<module>obix</module>
-		<module>shared</module>
 	</modules>
 
 	<!-- ======================================================= -->
@@ -80,14 +80,14 @@
 		</plugins>
 	</build>
 
-<!-- Dependency Management -->
+	<!-- Dependency Management -->
 	<dependencyManagement>
 		<dependencies>
-		    <dependency>
-		       <groupId>tec.units</groupId>
-		       <artifactId>unit-ri</artifactId>
-		       <version>${jsr.version}</version>
-		    </dependency>
+			<dependency>
+				<groupId>tec.units</groupId>
+				<artifactId>unit-ri</artifactId>
+				<version>${jsr.version}</version>
+			</dependency>
 			<dependency>
 				<groupId>tec.uom.lib</groupId>
 				<artifactId>uom-lib-common</artifactId>

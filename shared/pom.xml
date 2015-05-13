@@ -7,8 +7,8 @@
 		<version>0.2-SNAPSHOT</version>
 	</parent>
 	<artifactId>uom-shared-tools</artifactId>
-	<name>Units of Measurement Shared Tools</name>
-	<description>UOM Shared Tools for oBIX (Open Building Information Xchange) and Unicode CLDR</description>
+	<name>Units of Measurement Tools Shared Library</name>
+	<description>UoM Shared Tools for oBIX (Open Building Information Xchange) and Unicode CLDR</description>
 
 	<dependencies>
 		<dependency>
