@@ -27,6 +27,7 @@
 	<modules>
 		<module>cldr</module>
 		<module>obix</module>
+		<module>shared</module>
 	</modules>
 
 	<!-- ======================================================= -->
