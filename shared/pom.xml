@@ -8,7 +8,7 @@
 	</parent>
 	<artifactId>uom-shared-tools</artifactId>
 	<name>Units of Measurement Tools Shared Library</name>
-	<description>UoM Shared Tools for oBIX (Open Building Information Xchange) and Unicode CLDR</description>
+	<description>UoM Shared Tools for Unicode CLDR, oBIX (Open Building Information Xchange), and other formats</description>
 
 	<dependencies>
 		<dependency>
