@@ -112,6 +112,16 @@
 	</dependencyManagement>
 
 	<distributionManagement>
+		<repository>
+			<id>bintray-release</id>
+			<name>oss-jfrog-artifactory-release</name>
+			<url>https://oss.jfrog.org/artifactory/oss-release-local</url>
+		</repository>
+		<snapshotRepository>
+			<id>bintray-snapshot</id>
+			<name>oss-jfrog-artifactory-snapshot</name>
+			<url>https://oss.jfrog.org/artifactory/oss-snapshot-local</url>
+		</snapshotRepository>
 		<site>
 			<id>www.unitsofmeasurement.org</id>
 			<url>scp://www.unitsofmeasurement.org/www/docs/lib/</url>
