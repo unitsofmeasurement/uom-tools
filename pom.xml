@@ -7,7 +7,7 @@
 	<parent>
 		<groupId>tec.uom</groupId>
 		<artifactId>uom-parent</artifactId>
-		<version>0.8-RC2</version>
+		<version>0.8-RC3</version>
 	</parent>
 	<packaging>pom</packaging>
 	<name>Units of Measurement Tools</name>
@@ -34,7 +34,7 @@
 	<!-- Build Settings -->
 	<!-- ======================================================= -->
 	<properties>
-		<ri.version>0.8-RC1</ri.version>
+		<ri.version>0.8-RC3</ri.version>
 		<project.build.javaVersion>1.7</project.build.javaVersion>
 		<jdkVersion>1.7</jdkVersion>
 		<maven.compile.targetLevel>${jdkVersion}</maven.compile.targetLevel>
