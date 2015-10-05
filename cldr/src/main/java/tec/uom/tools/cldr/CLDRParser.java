@@ -1,4 +1,4 @@
-/**
+/*
  * Unit-API - Units of Measurement API for Java
  * Copyright (c) 2005-2015, Jean-Marie Dautelle, Werner Keil, V2COM.
  *
@@ -36,12 +36,13 @@ import java.util.logging.Logger;
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
-import javax.measure.format.Parser;
 import javax.measure.format.ParserException;
+
+import tec.units.ri.format.Parser;
 
 /**
  * @author Werner
- * @version 0.2
+ * @version 0.3
  */
 final class CLDRParser implements Parser<Object, String> {
 
