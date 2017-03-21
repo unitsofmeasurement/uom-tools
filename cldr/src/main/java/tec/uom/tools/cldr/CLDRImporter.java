@@ -54,149 +54,151 @@ import javax.tools.Tool;
  * @version 0.2
  */
 public class CLDRImporter implements Tool {
-	// TODO factor out, e.g. into uom-tools-common
-	static enum ErrorCode {
-		OK, Failure
-		// For now we'll use ordinal, but should change to code or Id (e.g. using IntIdentifiable)
-	}
-	
-	private static final Logger logger = Logger.getLogger(CLDRImporter.class.getName());
-	
-	static boolean isVerbose;
-	
-	// TODO this could be reusable, too, e.g. in uom-tools-common
-    static class ToolCommand implements Runnable {
-        @Option(type = OptionType.GLOBAL, name = "-v", description = "Verbose mode")
-        public boolean verbose;
-
-        public void run() {
-            System.out.println(getClass().getSimpleName());
-        }
+    // TODO factor out, e.g. into uom-tools-common
+    static enum ErrorCode {
+	OK, Failure
+	// For now we'll use ordinal, but should change to code or Id (e.g.
+	// using IntIdentifiable)
     }
-    
+
+    private static final Logger logger = Logger.getLogger(CLDRImporter.class.getName());
+
+    static boolean isVerbose;
+
+    // TODO this could be reusable, too, e.g. in uom-tools-common
+    static class ToolCommand implements Runnable {
+	@Option(type = OptionType.GLOBAL, name = "-v", description = "Verbose mode")
+	public boolean verbose;
+
+	public void run() {
+	    System.out.println(getClass().getSimpleName());
+	}
+    }
+
     @Command(name = "display", description = "Display elements")
     public static final class Display extends ToolCommand {
-        @Option(name = "-i", description = "Input file")
-        public String inFile;
-        
-        @Override
-        public void run() {
-        	if (inFile!=null && inFile.length()>0) {
-        		logger.info(getClass().getSimpleName() + " " + inFile);
-        	} else {
-        		logger.info(getClass().getSimpleName());
-        	}
-        	
-        	isVerbose = verbose;
-        	
-//        	if (verbose) {        	     	
-				if (inFile!=null && inFile.length()>0) {
-					try {
-						CLDRParser parser = new CLDRParser(true); // for display we currently verbose output
-						parser.load(inFile);
-					} catch (ParserException pe) {
-						logger.log(Level.WARNING, getClass().getSimpleName() + " error", pe);
-					} catch (IOException ioe) {
-						logger.log(Level.SEVERE, getClass().getSimpleName() + " loading error", ioe);
-					}
-				}
-//        	}
-        }
+	@Option(name = "-i", description = "Input file")
+	public String inFile;
+
+	@Override
+	public void run() {
+	    if (inFile != null && inFile.length() > 0) {
+		logger.info(getClass().getSimpleName() + " " + inFile);
+	    } else {
+		logger.info(getClass().getSimpleName());
+	    }
+
+	    isVerbose = verbose;
+
+	    // if (verbose) {
+	    if (inFile != null && inFile.length() > 0) {
+		try {
+		    CLDRParser parser = new CLDRParser(true); // for display we
+							      // currently
+							      // verbose output
+		    parser.load(inFile);
+		} catch (ParserException pe) {
+		    logger.log(Level.WARNING, getClass().getSimpleName() + " error", pe);
+		} catch (IOException ioe) {
+		    logger.log(Level.SEVERE, getClass().getSimpleName() + " loading error", ioe);
+		}
+	    }
+	    // }
+	}
     }
-    
+
     @Command(name = "write", description = "Write to file")
     public static final class Write extends ToolCommand {
-        @Option(name = "-i", description = "Input file")
-        public String inFile;
+	@Option(name = "-i", description = "Input file")
+	public String inFile;
 
-        @Option(name = "-u", description = "Units output file (CSV)")
-        public String unitOutFile;
-        
-        @Option(name = "-q", description = "Quantities output file")
-        public String quantOutFile;
-        
-        @Option(name = "-s", description = "Sort entries")
-        public boolean sorted;
-        
-        @Arguments(description = "Quantities to write (Filter)")
-        public List<String> quantityFilter;
-        
-        @Override
-        public void run() {
-        	final StringBuilder message = new StringBuilder(getClass().getSimpleName());
-        	if ((unitOutFile!=null && unitOutFile.length()>0) || 
-        		(quantOutFile!=null && quantOutFile.length()>0)) {
-        		message.append(" to ");
-        		if (unitOutFile!=null && unitOutFile.length()>0) {
-        			message.append(unitOutFile);
-        			if (quantOutFile!=null && quantOutFile.length()>0) {
-        				message.append(", ");
-        				message.append(quantOutFile);
-        			}
-        		} else {
-        			if (quantOutFile!=null && quantOutFile.length()>0) message.append(quantOutFile);
-        		}
-        	}
-        	logger.info(message.toString());
-        	isVerbose = verbose;
-        	
-//        	if (quantities != null) {
-//		        for (String q : quantities) {
-//		        	System.out.println(q);
-//		        }
-//        	}
-        	
-			if ((inFile!=null && inFile.length()>0) && 
-			   ((unitOutFile!=null && unitOutFile.length()>0) ||
-			    (quantOutFile!=null && quantOutFile.length()>0))) {
-				try {
-					CLDRParser parser = new CLDRParser(verbose);
-					parser.load(inFile, unitOutFile, quantOutFile);
-				} catch (ParserException pe) {
-					logger.log(Level.WARNING, getClass().getSimpleName() + " error", pe);
-				} catch (IOException ioe) {
-					logger.log(Level.SEVERE, getClass().getSimpleName() + " loading error", ioe);
-				}			
-			}
-        }
-    }
-	
-	/* (non-Javadoc)
-	 * @see javax.tools.Tool#run(java.io.InputStream, java.io.OutputStream, java.io.OutputStream, java.lang.String[])
-	 */
+	@Option(name = "-u", description = "Units output file (CSV)")
+	public String unitOutFile;
+
+	@Option(name = "-q", description = "Quantities output file")
+	public String quantOutFile;
+
+	@Option(name = "-s", description = "Sort entries")
+	public boolean sorted;
+
+	@Arguments(description = "Quantities to write (Filter)")
+	public List<String> quantityFilter;
+
 	@Override
-	public int run(InputStream in, OutputStream out, OutputStream err,
-			String... arguments) {
+	public void run() {
+	    final StringBuilder message = new StringBuilder(getClass().getSimpleName());
+	    if ((unitOutFile != null && unitOutFile.length() > 0)
+		    || (quantOutFile != null && quantOutFile.length() > 0)) {
+		message.append(" to ");
+		if (unitOutFile != null && unitOutFile.length() > 0) {
+		    message.append(unitOutFile);
+		    if (quantOutFile != null && quantOutFile.length() > 0) {
+			message.append(", ");
+			message.append(quantOutFile);
+		    }
+		} else {
+		    if (quantOutFile != null && quantOutFile.length() > 0)
+			message.append(quantOutFile);
+		}
+	    }
+	    logger.info(message.toString());
+	    isVerbose = verbose;
+
+	    // if (quantities != null) {
+	    // for (String q : quantities) {
+	    // System.out.println(q);
+	    // }
+	    // }
+
+	    if ((inFile != null && inFile.length() > 0) && ((unitOutFile != null && unitOutFile.length() > 0)
+		    || (quantOutFile != null && quantOutFile.length() > 0))) {
 		try {
-			@SuppressWarnings("unchecked")
-			CliBuilder<Runnable> builder = Cli.<Runnable>builder(getClass().getSimpleName())
-		                .withDescription("Unicode CLDR Importer Tool")
-		                .withDefaultCommand(Help.class)
-		                .withCommands(Help.class, Display.class)
-		                .withCommands(Help.class, Write.class)
-		                ;
-		        Cli<Runnable> toolParser = builder.build();
-		        toolParser.parse(arguments).run();	
-				
-				return ErrorCode.OK.ordinal();
-		} catch (Exception e) {
-			logger.severe(e.getMessage());
-			return ErrorCode.Failure.ordinal();
+		    CLDRParser parser = new CLDRParser(verbose);
+		    parser.load(inFile, unitOutFile, quantOutFile);
+		} catch (ParserException pe) {
+		    logger.log(Level.WARNING, getClass().getSimpleName() + " error", pe);
+		} catch (IOException ioe) {
+		    logger.log(Level.SEVERE, getClass().getSimpleName() + " loading error", ioe);
 		}
+	    }
 	}
+    }
 
-	@Override
-	public final Set<SourceVersion> getSourceVersions() {
-		return Collections.unmodifiableSet(new HashSet<SourceVersion>(Arrays.asList(
-				new SourceVersion[]{SourceVersion.RELEASE_5, SourceVersion.RELEASE_6, 
-						SourceVersion.RELEASE_7 } )));
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see javax.tools.Tool#run(java.io.InputStream, java.io.OutputStream,
+     * java.io.OutputStream, java.lang.String[])
+     */
+    @Override
+    public int run(InputStream in, OutputStream out, OutputStream err, String... arguments) {
+	try {
+	    @SuppressWarnings("unchecked")
+	    CliBuilder<Runnable> builder = Cli.<Runnable>builder(getClass().getSimpleName())
+		    .withDescription("Unicode CLDR Importer Tool").withDefaultCommand(Help.class)
+		    .withCommands(Help.class, Display.class).withCommands(Help.class, Write.class);
+	    Cli<Runnable> toolParser = builder.build();
+	    toolParser.parse(arguments).run();
 
-	public static void main(String[] args) throws Exception {
-		Tool importer = new CLDRImporter();
-		int errorCode = importer.run(System.in, System.out, System.err, args);
-		if (errorCode == ErrorCode.OK.ordinal()) {
-			if (isVerbose) System.out.println("Success.");
-		}
+	    return ErrorCode.OK.ordinal();
+	} catch (Exception e) {
+	    logger.severe(e.getMessage());
+	    return ErrorCode.Failure.ordinal();
 	}
+    }
+
+    @Override
+    public final Set<SourceVersion> getSourceVersions() {
+	return Collections.unmodifiableSet(new HashSet<SourceVersion>(Arrays.asList(
+		new SourceVersion[] { SourceVersion.RELEASE_5, SourceVersion.RELEASE_6, SourceVersion.RELEASE_7 })));
+    }
+
+    public static void main(String[] args) throws Exception {
+	Tool importer = new CLDRImporter();
+	int errorCode = importer.run(System.in, System.out, System.err, args);
+	if (errorCode == ErrorCode.OK.ordinal()) {
+	    if (isVerbose)
+		System.out.println("Success.");
+	}
+    }
 }

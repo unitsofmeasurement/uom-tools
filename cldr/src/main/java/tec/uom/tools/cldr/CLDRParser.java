@@ -46,93 +46,90 @@ import tec.units.ri.format.Parser;
  */
 final class CLDRParser implements Parser<Object, String> {
 
-	/**
-	 * If called stand-alone
-	 * 
-	 * @param args
-	 * @throws Exception
-	 * @deprecated remove after test/debugging
-	 */
-	public static void main(String[] args) throws Exception {
-		CLDRParser parsing = new CLDRParser(true);
-		parsing.load("/root/units.json");
+    /**
+     * If called stand-alone
+     * 
+     * @param args
+     * @throws Exception
+     * @deprecated For testing only
+     */
+    public static void main(String[] args) throws Exception {
+	CLDRParser parsing = new CLDRParser(true);
+	parsing.load("/root/units.json");
+    }
+
+    private static final Logger logger = Logger.getLogger(CLDRParser.class.getName());
+
+    private final boolean verbose;
+    private final Set<String> unitSet = new HashSet<>();
+    private final Set<String> quantitySet = new HashSet<>();
+
+    CLDRParser(boolean v) {
+	this.verbose = v;
+    }
+
+    void load(String... files) throws IOException, ParserException {
+	if (files != null && files.length > 0) {
+
+	    InputStream is = CLDRParser.class.getResourceAsStream(files[0]);
+	    JsonReader rdr = Json.createReader(is);
+
+	    JsonObject obj = rdr.readObject();
+	    final JsonObject main = obj.getJsonObject("main");
+	    final JsonObject root = main.getJsonObject("root");
+	    final JsonObject units = root.getJsonObject("units");
+	    final JsonObject longUnits = units.getJsonObject("long");
+	    @SuppressWarnings("rawtypes")
+	    Set entries = longUnits.entrySet();
+
+	    for (Object o : entries) {
+		handle(parse(o));
+	    }
+	    if (unitSet.size() > 0 && files.length > 1) {
+		writeToFile(unitSet, files[1]);
+	    }
+	    if (quantitySet.size() > 0 && files.length > 2) {
+		writeToFile(quantitySet, files[2]);
+	    }
 	}
+    }
 
-	private static final Logger logger = Logger.getLogger(CLDRParser.class
-			.getName());
+    @Override
+    public String parse(Object input) throws ParserException {
+	return String.valueOf(input);
+    }
 
-	private final boolean verbose;
-	private final Set<String> unitSet = new HashSet<>();
-	private final Set<String> quantitySet = new HashSet<>();
-
-	CLDRParser(boolean v) {
-		this.verbose = v;
+    private void handle(String st) {
+	String[] subStrings = st.split("=");
+	if (subStrings != null && subStrings.length > 0) {
+	    handleUnit(subStrings[0]);
 	}
+    }
 
-	void load(String... files) throws IOException, ParserException {
-		if (files != null && files.length > 0) {
+    private void handleUnit(String unitEntry) {
+	if (unitEntry.contains("-")) {
+	    int quantCutOff = unitEntry.indexOf("-");
+	    String quantity = unitEntry.substring(0, quantCutOff);
+	    quantitySet.add(quantity);
+	    String unit = unitEntry.substring(quantCutOff + 1);
+	    unitSet.add(quantity + ";" + unit);
+	    if (verbose)
+		System.out.println(quantity + ": " + unit);
+	} else {
+	    logger.warning(String.format("'%s' has no quantity, ignoring.", unitEntry));
+	}
+    }
 
-			InputStream is = CLDRParser.class.getResourceAsStream(files[0]);
-			JsonReader rdr = Json.createReader(is);
-
-			JsonObject obj = rdr.readObject();
-			final JsonObject main = obj.getJsonObject("main");
-			final JsonObject root = main.getJsonObject("root");
-			final JsonObject units = root.getJsonObject("units");
-			final JsonObject longUnits = units.getJsonObject("long");
-			@SuppressWarnings("rawtypes")
-			Set entries = longUnits.entrySet();
-
-			for (Object o : entries) {
-				handle(parse(o));
-			}
-			if (unitSet.size() > 0 && files.length > 1) {
-				writeToFile(unitSet, files[1]);
-			}
-			if (quantitySet.size() > 0 && files.length > 2) {
-				writeToFile(quantitySet, files[2]);
-			}
+    private void writeToFile(final Set<String> strings, final String fileName) {
+	if (fileName != null && fileName.length() > 0) {
+	    try (FileWriter fw = new FileWriter(fileName); BufferedWriter bw = new BufferedWriter(fw)) {
+		for (String s : strings) {
+		    bw.write(s);
+		    bw.newLine();
 		}
+	    } catch (Exception e) {
+		logger.warning(e.getMessage());
+	    }
 	}
-
-	@Override
-	public String parse(Object input) throws ParserException {
-		return String.valueOf(input);
-	}
-
-	private void handle(String st) {
-		String[] subStrings = st.split("=");
-		if (subStrings != null && subStrings.length > 0) {
-			handleUnit(subStrings[0]);
-		}
-	}
-
-	private void handleUnit(String unitEntry) {
-		if (unitEntry.contains("-")) {
-			int quantCutOff = unitEntry.indexOf("-");
-			String quantity = unitEntry.substring(0, quantCutOff);
-			quantitySet.add(quantity);
-			String unit = unitEntry.substring(quantCutOff + 1);
-			unitSet.add(quantity + ";" + unit);
-			if (verbose)
-				System.out.println(quantity + ": " + unit);
-		} else {
-			logger.warning(String.format("'%s' has no quantity, ignoring.",
-					unitEntry));
-		}
-	}
-
-	private void writeToFile(final Set<String> strings, final String fileName) {
-		if (fileName != null && fileName.length() > 0) {
-			try (FileWriter fw = new FileWriter(fileName);
-					BufferedWriter bw = new BufferedWriter(fw)) {
-				for (String s : strings) {
-					bw.write(s);
-					bw.newLine();
-				}
-			} catch (Exception e) {
-				logger.warning(e.getMessage());
-			}
-		}
-	}
+    }
 }
