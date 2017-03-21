@@ -1,9 +1,6 @@
 #general:
 #  artifacts:
 #    - "target" # files, relative to the build directory
-machine:
-  environment:
-    UOM_VERSION: 0.3-SNAPSHOT
 test:
   post:
     - cp $HOME/.m2/repository/tec/uom/tools/uom-shared-tools/$UOM_VERSION/*.jar $CIRCLE_ARTIFACTS
