@@ -38,7 +38,8 @@ import javax.json.JsonObject;
 import javax.json.JsonReader;
 import javax.measure.format.ParserException;
 
-import tec.units.ri.format.Parser;
+import tec.uom.lib.common.function.Parser;
+
 
 /**
  * @author Werner

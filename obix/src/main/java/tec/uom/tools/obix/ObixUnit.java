@@ -1,6 +1,6 @@
-/**
+/*
  * Unit-API - Units of Measurement API for Java
- * Copyright (c) 2005-2015, Jean-Marie Dautelle, Werner Keil, V2COM.
+ * Copyright (c) 2005-2017, Werner Keil and others.
  *
  * All rights reserved.
  *
@@ -54,7 +54,7 @@ import java.util.Objects;
 
 /**
  * oBIX representation of a Unit
- * @version 0.3
+ * @version 0.4
  * @author Werner Keil
  */
 @SuppressWarnings("rawtypes")
@@ -488,7 +488,6 @@ final class ObixUnit implements Unit, DescriptionSupplier
 			return null;
 		}
 
-		@Override
 		public Map<? extends Dimension, Integer> getProductDimensions() {
 			// TODO Auto-generated method stub
 			return null;
@@ -510,6 +509,12 @@ final class ObixUnit implements Unit, DescriptionSupplier
 		public Dimension root(int arg0) {
 			// TODO Auto-generated method stub
 			return null;
+		}
+
+		@Override
+		public Map<? extends Dimension, Integer> getBaseDimensions() {
+		    // TODO Auto-generated method stub
+		    return null;
 		}
 	}
 
@@ -713,7 +718,6 @@ final class ObixUnit implements Unit, DescriptionSupplier
 		return null;
 	}
 
-	@Override
 	public Map getProductUnits() {
 		// TODO Auto-generated method stub
 		return null;
@@ -765,5 +769,11 @@ final class ObixUnit implements Unit, DescriptionSupplier
 	public Unit transform(UnitConverter arg0) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public Map getBaseUnits() {
+	    // TODO Auto-generated method stub
+	    return null;
 	}
 }
