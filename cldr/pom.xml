@@ -9,7 +9,7 @@
 	<artifactId>uom-cldr-tools</artifactId>
 	<name>Units of Measurement Tools for Unicode CLDR</name>
 	<properties>
-		<jsonp.version>1.0</jsonp.version>
+		<jsonp.version>1.1</jsonp.version>
 	</properties>
 	<dependencies>
 		<dependency>
