@@ -4,27 +4,11 @@
 #
 version: 2
 jobs:
-  clean:
-    docker:
-      # specify the version you desire here
-      - image: circleci/openjdk:11.0.1
-
-    working_directory: ~/repo
-
-    environment:
-      # Customize the JVM maximum heap limit
-      MAVEN_OPTS: -Xmx3200m
-    
-    steps:
-      - checkout
-        
-      # run coverage!
-      - run: mvn clean
   build:
     docker:
       # specify the version you desire here
-      - image: circleci/openjdk:11.0.1
-
+      - image: circleci/openjdk:9.0.4
+      
     working_directory: ~/repo
 
     environment:
@@ -35,13 +19,35 @@ jobs:
       - checkout
         
       # run tests!
-      - run: mvn integration-test
+      - run: mvn --batch-mode test
+      
+      - run: bash <(curl -s https://codecov.io/bash)
+  deployment:
+    docker:
+      # specify the version you desire here
+      - image: circleci/openjdk:9.0.4
+      
+      # Specify service dependencies here if necessary
+      # CircleCI maintains a library of pre-built images
+      # documented at https://circleci.com/docs/2.0/circleci-images/
+      # - image: circleci/postgres:9.4
 
+    working_directory: ~/repo
+
+    environment:
+      # Customize the JVM maximum heap limit
+      MAVEN_OPTS: -Xmx3200m
+    
+    steps:
+      - checkout
+        
+      # run deployment!
+      - run: mvn --batch-mode deploy -Dmaven.test.skip -DcreateDocs=true -s settings.xml
 workflows:
   version: 2
-  clean_build:
+  build_deploy:
     jobs:
-      - clean
-      - build:
+      - build
+      - deployment:
           requires:
-            - clean
+            - build
