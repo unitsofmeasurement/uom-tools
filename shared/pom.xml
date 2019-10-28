@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>tec.uom.tools</groupId>
 		<artifactId>uom-tools</artifactId>
-		<version>0.3-SNAPSHOT</version>
+		<version>0.3</version>
 	</parent>
 	<artifactId>uom-shared-tools</artifactId>
 	<name>Units of Measurement Tools Shared Library</name>
