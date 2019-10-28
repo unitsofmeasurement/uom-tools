@@ -2,9 +2,9 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>tec.uom.tools</groupId>
+		<groupId>tech.uom.tools</groupId>
 		<artifactId>uom-tools</artifactId>
-		<version>0.3-SNAPSHOT</version>
+		<version>1.0-SNAPSHOT</version>
 	</parent>
 	<artifactId>uom-cldr-tools</artifactId>
 	<name>Units of Measurement Tools for Unicode CLDR</name>
@@ -17,8 +17,8 @@
 			<artifactId>unit-api</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>tec.units</groupId>
-			<artifactId>unit-ri</artifactId>
+			<groupId>tech.units</groupId>
+			<artifactId>indriya</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>commons-io</groupId>

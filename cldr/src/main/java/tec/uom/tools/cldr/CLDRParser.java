@@ -1,6 +1,6 @@
 /*
  * Unit-API - Units of Measurement API for Java
- * Copyright (c) 2005-2015, Jean-Marie Dautelle, Werner Keil, V2COM.
+ * Copyright (c) 2005-2019, Jean-Marie Dautelle, Werner Keil and others.
  *
  * All rights reserved.
  *
@@ -10,7 +10,7 @@
  *
  * 2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
  *
- * 3. Neither the name of JSR-363 nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+ * 3. Neither the name of JSR-385 nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
@@ -36,9 +36,9 @@ import java.util.logging.Logger;
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
-import javax.measure.format.ParserException;
+import javax.measure.format.MeasurementParseException;
 
-import tec.uom.lib.common.function.Parser;
+import tech.uom.lib.common.function.Parser;
 
 
 /**
@@ -69,7 +69,7 @@ final class CLDRParser implements Parser<Object, String> {
 	this.verbose = v;
     }
 
-    void load(String... files) throws IOException, ParserException {
+    void load(String... files) throws IOException, MeasurementParseException {
 	if (files != null && files.length > 0) {
 
 	    InputStream is = CLDRParser.class.getResourceAsStream(files[0]);
@@ -96,7 +96,7 @@ final class CLDRParser implements Parser<Object, String> {
     }
 
     @Override
-    public String parse(Object input) throws ParserException {
+    public String parse(Object input) throws MeasurementParseException {
 	return String.valueOf(input);
     }
 

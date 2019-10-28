@@ -1,6 +1,6 @@
 /*
  * Unit-API - Units of Measurement API for Java
- * Copyright (c) 2005-2017, Werner Keil and others.
+ * Copyright (c) 2005-2019, Werner Keil and others.
  *
  * All rights reserved.
  *
@@ -11,7 +11,7 @@
  *
  * 2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
  *
- * 3. Neither the name of JSR-363 nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+ * 3. Neither the name of JSR-385 nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
@@ -36,12 +36,13 @@ import static tec.uom.tools.obix.LocalHelpers.split;
 import javax.measure.Dimension;
 import javax.measure.IncommensurableException;
 import javax.measure.MeasurementException;
+import javax.measure.Prefix;
 import javax.measure.UnconvertibleException;
 import javax.measure.Unit;
 import javax.measure.UnitConverter;
-import javax.measure.format.ParserException;
+import javax.measure.format.MeasurementParseException;
 
-import tec.uom.lib.common.function.DescriptionSupplier;
+import tech.uom.lib.common.function.DescriptionSupplier;
 
 import java.io.FileReader;
 import java.io.LineNumberReader;
@@ -175,8 +176,8 @@ final class ObixUnit implements Unit, DescriptionSupplier
 			unit = parseUnit(str);
 		} catch (Throwable e) {
 			String msg = str;
-			if (e instanceof ParserException)
-				msg += ": " + ((ParserException) e).getMessage();
+			if (e instanceof MeasurementParseException)
+				msg += ": " + ((MeasurementParseException) e).getMessage();
 			throw new MeasurementException("Unit", e);
 		}
 
@@ -775,5 +776,29 @@ final class ObixUnit implements Unit, DescriptionSupplier
 	public Map getBaseUnits() {
 	    // TODO Auto-generated method stub
 	    return null;
+	}
+
+	@Override
+	public Unit shift(Number offset) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Unit multiply(Number multiplier) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Unit divide(Number divisor) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Unit prefix(Prefix prefix) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

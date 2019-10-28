@@ -50,7 +50,7 @@ import javax.lang.model.SourceVersion;
 import javax.measure.Unit;
 import javax.tools.Tool;
 
-import tec.uom.lib.common.function.DescriptionSupplier;
+import tech.uom.lib.common.function.DescriptionSupplier;
 
 /**
  * @author Werner
