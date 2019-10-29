@@ -29,4 +29,5 @@
 			</plugin>
 		</plugins>
 	</build>
+	<name>Units of Measurement Code Analysis</name>
 </project>
