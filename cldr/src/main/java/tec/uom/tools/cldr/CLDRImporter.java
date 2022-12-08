@@ -1,6 +1,6 @@
 /**
- * Unit-API - Units of Measurement API for Java
- * Copyright (c) 2005-2015, Jean-Marie Dautelle, Werner Keil, V2COM.
+ * Units of Measurement Tools for Java
+ * Copyright (c) 2005-2022, Jean-Marie Dautelle, Werner Keil and others.
  *
  * All rights reserved.
  *
@@ -46,12 +46,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.lang.model.SourceVersion;
-import javax.measure.format.ParserException;
+import javax.measure.format.MeasurementParseException;
 import javax.tools.Tool;
 
 /**
  * @author Werner
- * @version 0.2
+ * @version 0.3
  */
 public class CLDRImporter implements Tool {
     // TODO factor out, e.g. into uom-tools-common
@@ -97,7 +97,7 @@ public class CLDRImporter implements Tool {
 							      // currently
 							      // verbose output
 		    parser.load(inFile);
-		} catch (ParserException pe) {
+		} catch (MeasurementParseException pe) {
 		    logger.log(Level.WARNING, getClass().getSimpleName() + " error", pe);
 		} catch (IOException ioe) {
 		    logger.log(Level.SEVERE, getClass().getSimpleName() + " loading error", ioe);
@@ -155,7 +155,7 @@ public class CLDRImporter implements Tool {
 		try {
 		    CLDRParser parser = new CLDRParser(verbose);
 		    parser.load(inFile, unitOutFile, quantOutFile);
-		} catch (ParserException pe) {
+		} catch (MeasurementParseException pe) {
 		    logger.log(Level.WARNING, getClass().getSimpleName() + " error", pe);
 		} catch (IOException ioe) {
 		    logger.log(Level.SEVERE, getClass().getSimpleName() + " loading error", ioe);

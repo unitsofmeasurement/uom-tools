@@ -55,7 +55,7 @@ import java.util.Objects;
 
 /**
  * oBIX representation of a Unit
- * @version 0.4
+ * @version 0.5
  * @author Werner Keil
  */
 @SuppressWarnings("rawtypes")
@@ -800,5 +800,11 @@ final class ObixUnit implements Unit, DescriptionSupplier
 	public Unit prefix(Prefix prefix) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public boolean isEquivalentTo(Unit that) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }
