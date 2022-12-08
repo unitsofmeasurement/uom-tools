@@ -4,24 +4,6 @@
 #
 version: 2
 jobs:
-  clean:
-    docker:
-      # specify the version you desire here
-      - image: cimg/openjdk:17.0.3
-
-    working_directory: ~/repo
-
-    environment:
-      # Customize the JVM maximum heap limit
-      MAVEN_OPTS: -Xmx3200m
-
-    steps:
-      - checkout
-
-      # run clean!
-      - run: mvn clean
-    # The resource_class feature allows configuring CPU and RAM resources for each job. Different resource classes are available for different executors. https://circleci.com/docs/2.0/configuration-reference/#resourceclass
-    resource_class: large
   deployment:
     docker:
       # specify the version you desire here
@@ -38,6 +20,9 @@ jobs:
 
       # run deployment!
       - run: mvn deploy -Dmaven.test.skip -DcreateDocs=true -s settings.xml
+      
+    # The resource_class feature allows configuring CPU and RAM resources for each job. Different resource classes are available for different executors. https://circleci.com/docs/2.0/configuration-reference/#resourceclass
+    resource_class: large
   build:
     docker:
       # specify the version you desire here
@@ -54,15 +39,15 @@ jobs:
 
       # run tests!
       - run: mvn integration-test
+      
+    # The resource_class feature allows configuring CPU and RAM resources for each job. Different resource classes are available for different executors. https://circleci.com/docs/2.0/configuration-reference/#resourceclass
+    resource_class: large
 
 workflows:
   version: 2
-  clean_build_deploy:
+  build_deploy:
     jobs:
-      - clean
-      - build:
-          requires:
-            - clean
+      - build
       - deployment:
           requires:
             - build
