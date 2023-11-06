@@ -1,14 +1,15 @@
 package tech.uom.tools.cldr;
 
-import static org.junit.Assert.*;
-
 import java.io.StringReader;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonReader;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class JsonTest {
 

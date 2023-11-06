@@ -1,14 +1,12 @@
 package tech.uom.tools.shared;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.io.IOException;
 import java.io.InputStream;
 
-import org.junit.Test;
-
-import tech.uom.tools.shared.AbsoluteURLInputSource;
+import org.junit.jupiter.api.Test;
 
 /**
  * Created by IntelliJ IDEA.
@@ -22,7 +20,7 @@ public class AbsoluteURLInputSourceTest {
 	public void getInputTest(){
 		AbsoluteURLInputSource absUrlInputSrc = new AbsoluteURLInputSource(null);
 		try {
-			InputStream result = absUrlInputSrc.getInput("");
+			final InputStream result = absUrlInputSrc.getInput("");
 			assertNotNull(result);
 			assertEquals(0, result.available());
 		} catch (IOException e) {
