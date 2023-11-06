@@ -163,22 +163,7 @@
             <id>ossrh-snapshot</id>
             <name>OSSRH Snapshots</name>
             <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
-        </repository>
-             <repository>
-            <id>repository.jboss.org</id>
-            <name>JBoss Repository</name>
-            <url>http://repository.jboss.org/maven2</url>
-        </repository>
-        <repository>
-            <id>jboss-maven2-brew</id>
-            <name>JBoss Maven 2 Brew Repository</name>
-            <url>https://repository.jboss.org/nexus/content/repositories/releases/</url>
-        </repository>
-        <repository>
-            <id>jboss-maven2-snapshots</id>
-            <name>JBoss Maven 2 Brew Repository</name>
-            <url>https://repository.jboss.org/nexus/content/repositories/snapshots/</url>
-        </repository>
+        </repository>        
     </repositories>
     
 	<profiles>
