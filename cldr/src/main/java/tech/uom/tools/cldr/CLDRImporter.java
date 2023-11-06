@@ -1,6 +1,6 @@
 /**
  * Units of Measurement Tools for Java
- * Copyright (c) 2005-2022, Jean-Marie Dautelle, Werner Keil and others.
+ * Copyright (c) 2005-2023, Jean-Marie Dautelle, Werner Keil and others.
  *
  * All rights reserved.
  *
@@ -26,13 +26,13 @@
  */
 package tech.uom.tools.cldr;
 
-import io.airlift.airline.Arguments;
-import io.airlift.airline.Cli;
-import io.airlift.airline.Command;
-import io.airlift.airline.Help;
-import io.airlift.airline.Option;
-import io.airlift.airline.OptionType;
-import io.airlift.airline.Cli.CliBuilder;
+import com.github.rvesse.airline.Cli;
+import com.github.rvesse.airline.annotations.Arguments;
+import com.github.rvesse.airline.annotations.Command;
+import com.github.rvesse.airline.annotations.Option;
+import com.github.rvesse.airline.annotations.OptionType;
+import com.github.rvesse.airline.builder.CliBuilder;
+import com.github.rvesse.airline.help.Help;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -51,7 +51,7 @@ import javax.tools.Tool;
 
 /**
  * @author Werner
- * @version 0.3
+ * @version 0.5
  */
 public class CLDRImporter implements Tool {
     // TODO factor out, e.g. into uom-tools-common

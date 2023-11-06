@@ -1,6 +1,6 @@
 /**
- * Unit-API - Units of Measurement API for Java
- * Copyright (c) 2005-2015, Jean-Marie Dautelle, Werner Keil, V2COM.
+ * Units of Measurement Tools for Java
+ * Copyright (c) 2005-2023, Werner Keil and others.
  *
  * All rights reserved.
  *
@@ -26,14 +26,6 @@
  */
 package tech.uom.tools.obix;
 
-import io.airlift.airline.Arguments;
-import io.airlift.airline.Cli;
-import io.airlift.airline.Cli.CliBuilder;
-import io.airlift.airline.Command;
-import io.airlift.airline.Help;
-import io.airlift.airline.Option;
-import io.airlift.airline.OptionType;
-
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.InputStream;
@@ -50,11 +42,19 @@ import javax.lang.model.SourceVersion;
 import javax.measure.Unit;
 import javax.tools.Tool;
 
+import com.github.rvesse.airline.Cli;
+import com.github.rvesse.airline.annotations.Arguments;
+import com.github.rvesse.airline.annotations.Command;
+import com.github.rvesse.airline.annotations.Option;
+import com.github.rvesse.airline.annotations.OptionType;
+import com.github.rvesse.airline.builder.CliBuilder;
+import com.github.rvesse.airline.help.Help;
+
 import tech.uom.lib.common.function.DescriptionSupplier;
 
 /**
  * @author Werner
- * @version 0.3
+ * @version 0.5
  */
 public class ObixImporter implements Tool {
 	// TODO factor out, e.g. into uom-lib-common
