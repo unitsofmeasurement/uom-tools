@@ -1,6 +1,6 @@
 /*
- * Unit-API - Units of Measurement API for Java
- * Copyright (c) 2005-2019, Jean-Marie Dautelle, Werner Keil and others.
+ * Units of Measurement Tools for Java
+ * Copyright (c) 2005-2023, Jean-Marie Dautelle, Werner Keil and others.
  *
  * All rights reserved.
  *
