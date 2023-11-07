@@ -33,9 +33,9 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.logging.Logger;
 
-import javax.json.Json;
-import javax.json.JsonObject;
-import javax.json.JsonReader;
+import jakarta.json.Json;
+import jakarta.json.JsonObject;
+import jakarta.json.JsonReader;
 import javax.measure.format.MeasurementParseException;
 
 import tech.uom.lib.common.function.Parser;
@@ -43,7 +43,7 @@ import tech.uom.lib.common.function.Parser;
 
 /**
  * @author Werner
- * @version 0.3
+ * @version 1.0
  */
 final class CLDRParser implements Parser<Object, String> {
 
