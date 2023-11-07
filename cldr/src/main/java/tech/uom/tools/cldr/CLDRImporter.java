@@ -190,7 +190,7 @@ public class CLDRImporter implements Tool {
     @Override
     public final Set<SourceVersion> getSourceVersions() {
 	return Collections.unmodifiableSet(new HashSet<SourceVersion>(Arrays.asList(
-		new SourceVersion[] { SourceVersion.RELEASE_5, SourceVersion.RELEASE_6, SourceVersion.RELEASE_7 })));
+		new SourceVersion[] { SourceVersion.RELEASE_8 })));
     }
 
     public static void main(String[] args) throws Exception {
